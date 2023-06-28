@@ -59,10 +59,12 @@ const CardController = memo(({categoryparam, totalResult, visible, closeFilter, 
 
   return (
     <div>
-      <div>
-        <div>
-          lllllllllllll
-        </div>
+      <div
+        className={`${styles.webRoot} ${
+          visible === true ? styles.show : styles.hide
+        }`}
+      >
+        lllllllllllll
       </div>
     </div>
   );
