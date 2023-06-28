@@ -64,7 +64,9 @@ const CardController = memo(({categoryparam, totalResult, visible, closeFilter, 
           visible === true ? styles.show : styles.hide
         }`}
       >
-        lllllllllllll
+        <div className={styles.actionContainer}>
+          llllllllllll
+        </div>
       </div>
     </div>
   );
