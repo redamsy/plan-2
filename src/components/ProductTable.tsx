@@ -243,7 +243,6 @@ const ProductTable = memo(() => {
           data={products}
           editingMode="modal" //default
           enableColumnOrdering
-          enableRowSelection
           enableEditing
           renderRowActions={({ row, table }) => (
             <Box sx={{ display: 'flex', gap: '1rem' }}>
@@ -277,37 +276,6 @@ const ProductTable = memo(() => {
                 variant="contained"
               >
                 Export All Data
-              </Button>
-              <Button
-                disabled={table.getPrePaginationRowModel().rows.length === 0}
-                //export all rows, including from the next page, (still respects filtering and sorting)
-                onClick={() =>
-                  handleExportRows(table.getPrePaginationRowModel().rows)
-                }
-                startIcon={<FileDownloadIcon />}
-                variant="contained"
-              >
-                Export All Rows
-              </Button>
-              <Button
-                disabled={table.getRowModel().rows.length === 0}
-                //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
-                onClick={() => handleExportRows(table.getRowModel().rows)}
-                startIcon={<FileDownloadIcon />}
-                variant="contained"
-              >
-                Export Page Rows
-              </Button>
-              <Button
-                disabled={
-                  !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
-                }
-                //only export selected rows
-                onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-                startIcon={<FileDownloadIcon />}
-                variant="contained"
-              >
-                Export Selected Rows
               </Button>
             </Box>
           )}
