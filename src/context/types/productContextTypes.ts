@@ -1,12 +1,7 @@
-import { Color } from "../../models/Color";
-import { IProductBody, DetailedProduct, CategoriesWithSub } from "../../models/Product";
-import { Size } from "../../models/Size";
+import { IProductBody, Product } from "../../models/Product";
 
 export interface IProductState {
-  detailedProducts: DetailedProduct[];
-  categoriesWithSubFilters: CategoriesWithSub[];
-  sizeFilters: Size[];
-  colorFilters: Color[];
+  products: Product[];
   loadingData: boolean;
   isCreating: boolean;
   isUpdating: boolean;
