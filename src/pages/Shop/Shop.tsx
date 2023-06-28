@@ -5,7 +5,7 @@ import styles from './Shop.module.css';
 
 import Banner from '../../components/Banner';
 import BreadCrumbs from '../../components/BreadCrumbs';
-import { Filter } from '../../components/CardController';
+import CardController, { Filter } from '../../components/CardController';
 import Container from '../../components/Container';
 import Layout from '../../components/Layout';
 import LayoutOption from '../../components/LayoutOption';
@@ -109,6 +109,13 @@ const Shop = () => {
                 </div>
               </div>
             </div>
+            <CardController
+              categoryparam={categoryparam}
+              totalResult={displayedProducts.length}
+              applyFilter={applyFilter}
+              closeFilter={() => setShowFilter(false)}
+              visible={showFilter}
+            />
             {/* <div className={styles.chipsContainer}>
               <Chip name={'XS'} close={onclose}/>
               <Chip name={'S'} close={onclose}/>

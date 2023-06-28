@@ -57,53 +57,10 @@ const initializeFilterState = (
 
 const CardController = memo(({categoryparam, totalResult, visible, closeFilter, applyFilter}: Props) => {
   const { categoriesWithSubFilters, sizeFilters, colorFilters } = useProductState();
-  const [category, setCategory] = useState<FilterWithIndex>();
-
   const [filterState, setFilterState] = useState<Filter[]>(
     initializeFilterState(categoriesWithSubFilters, colorFilters, sizeFilters, categoryparam)
     );
 
-  const filterTick = (e: React.ChangeEvent<HTMLInputElement>, categoryIndex: number, labelIndex: number) => {
-    const filterStateCopy = [...filterState];
-    filterStateCopy[categoryIndex].items[labelIndex].value = e.target.checked;
-    setFilterState(filterStateCopy);
-  };
-
-  const resetFilter = () => {
-    const filterStateCopy = [...filterState];
-    for (let x = 0; x < filterStateCopy.length; x++) {
-      for (let y = 0; y < filterStateCopy[x].items.length; y++) {
-        filterStateCopy[x].items[y].value = false;
-      }
-    }
-    setFilterState(filterStateCopy);
-  };
-
-  useEffect(() => {
-    const newFilterState = initializeFilterState(categoriesWithSubFilters, colorFilters, sizeFilters, categoryparam);
-    setFilterState(newFilterState);
-    applyFilter(newFilterState);
-
-    //category state it is not updating
-    //back around to commented code below
-    // we need to to show the 'root filter drawer(<div className={styles.mobileFilters}>)'
-    setCategory(undefined)
-    //react_devtools_backend_compact.js:2367 Warning: Maximum update depth exceeded.
-    //This can happen when a component calls setState inside useEffect,
-    //but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.
-    // if(category){
-    //   if(category.category === 'categories') {
-    //     const filterItem = newFilterState.find((nf, index) => nf.category === 'categories');
-    //     const filterItemIndex = newFilterState.findIndex((nf) => nf.category === 'categories');
-    //     if(filterItem) {
-    //       setCategory({
-    //         ...filterItem,
-    //         categoryIndex: filterItemIndex,
-    //       });
-    //     }
-    //   }
-    // }
-  }, [categoryparam, categoriesWithSubFilters, colorFilters, sizeFilters, applyFilter]);
 
   return (
     <div>
