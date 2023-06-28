@@ -1,4 +1,4 @@
-import {userModel} from "../models/user.model.js";
+import {pageModel, userModel} from "../models/user.model.js";
 import jsonwebtoken from "jsonwebtoken";
 import responseHandler from "../handlers/response.handler.js";
 
@@ -103,6 +103,81 @@ const getInfo = async (req, res) => {
   }
 };
 /////////////////////////////////////////////////////////////////////////////////
+const createPage = async (req, res) => {
+  try {
+    const {slug , sections} = req.body
+    const page = new pageModel({
+      slug,
+      sections,
+    });
+    await page.save();
+    
+    return responseHandler.created(res, {
+      ...page._doc,
+      id: page.id,
+    });
+
+  } catch (error) {
+    console.log("userController: createPage error", error);
+    return responseHandler.error(res);
+  }
+};
+
+const updatePage = async (req, res) => {
+  try {
+    const { pageId } = req.params;
+    console.log("userController: updatePage pageId", pageId);
+    const { slug, sections } = req.body;
+
+    const updatedPage = await pageModel.findByIdAndUpdate(
+      pageId,
+      { slug, sections },
+      { new: true }
+    );
+
+    if (!updatedPage) {
+      return responseHandler.notfound(res);
+    }
+
+    return responseHandler.ok(res, {
+      ...updatedPage._doc,
+      id: updatedPage.id,
+    });
+  } catch (error) {
+    console.log("userController: updatePage: error", error);
+    return responseHandler.error(res);
+  }
+};
+
+const removePage = async (req, res) => {
+  try {
+    const { pageId } = req.params;
+
+    const page = await pageModel.findOne({
+      _id: pageId,
+    });
+    if (!page) return responseHandler.notfound(res);
+
+    await page.deleteOne();
+
+    return responseHandler.ok(res);
+  } catch(error) {
+    console.log("userController: deletePage: error", error);
+    return responseHandler.error(res);
+  }
+};
+
+const getAllPages = async (req, res) => {
+  try {
+    const pages = await pageModel.find();
+
+    return responseHandler.ok(res, pages);
+  } catch(error) {
+    console.log("userController: getAllPages: error", error);
+    return responseHandler.error(res);
+  }
+};
+/////////////////////////////////////////////////////////////////////////////////
 const updateCurrency = async (req, res) => {
   try {
     const { id } = req.user;
@@ -132,5 +207,9 @@ export default {
   signin,
   getInfo,
   updatePassword,
+  createPage,
+  updatePage,
+  removePage,
+  getAllPages,
   updateCurrency,
 };

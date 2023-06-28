@@ -14,7 +14,7 @@ import { CurrencyExchange } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useAuthActions, useAuthState } from "../context/authContext";
 import CurrencyAndRateEdit from "./CurrencyAndRateEdit";
-import ChangePassword from "../pages/ChangePassword";
+import ChangePassword from "../components/ChangePassword";
 
 export default function AppBarWrapper({
   children,
