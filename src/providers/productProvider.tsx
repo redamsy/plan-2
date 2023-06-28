@@ -5,19 +5,20 @@ import React, {
   useState,
   useMemo,
 } from "react";
-import { Product, IProductBody } from "../models/Product";
+import { DetailedProduct, IProductBody } from "../models/Product";
 import {
   createProduct,
   deleteProduct,
-  getProducts,
+  getDetailedProducts,
   updateProduct,
 } from "../actions/product";
 import CircularProgressPage from "../components/CircularProgressPage";
 import { ProductContext, initialProductContext } from "../context/productsContext";
+import { generateCategoriesWithSub, generateSizesAndColors } from "../utils";
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
-  const [products, setProducts] = useState<Product[]>(initialProductContext.state.products);
+  const [detailedProducts, setDetailedProducts] = useState<DetailedProduct[]>(initialProductContext.state.detailedProducts);
   const [loadingData, setLoadingData] = useState<boolean>(initialProductContext.state.loadingData);
   const [isCreating, setIsCreating] = useState<boolean>(initialProductContext.state.isCreating);
   const [isUpdating, setIsUpdating] = useState<boolean>(initialProductContext.state.isUpdating);
@@ -33,13 +34,16 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   );
   const [openSnack, setOpenSnack] = useState(initialProductContext.state.openSnack);
 
+  const categoriesWithSubFilters = useMemo(() => generateCategoriesWithSub(detailedProducts), [detailedProducts]);
+  const { sizes: sizeFilters, colors: colorFilters } = useMemo(() => generateSizesAndColors(detailedProducts), [detailedProducts]);
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoadingData(true);
-        const res = await getProducts();
+        const res = await getDetailedProducts();
         console.log("productProvider: res.data", res.data);
-        setProducts(res.data);
+        setDetailedProducts(res.data);
         setLoadingData(false);
       } catch (error: Error | any) {
         setLoadingData(false);
@@ -62,11 +66,11 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       setIsCreating(true);
       const createResponse = await createProduct(productBody);
       console.log("productProvider: createNewProduct", createResponse);
-      const { status, data: product } = createResponse;
+      const { status, data: detailedProduct } = createResponse;
 
-      if (product && status === 201) {
+      if (detailedProduct && status === 201) {
 
-        setProducts([...products, product]);
+        setDetailedProducts([...detailedProducts, detailedProduct]);
 
         setIsCreating(false);
         setCreateError("");
@@ -87,7 +91,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       }
       setOpenSnack(true);
     }
-  }, [products, clearErrorsAndCloseSnack]);
+  }, [detailedProducts, clearErrorsAndCloseSnack]);
 
   const updateCurrentProduct = useCallback(async (productBody: IProductBody) => {
     try {
@@ -95,12 +99,12 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       setIsUpdating(true);
       const updateResponse = await updateProduct(productBody);
       console.log("productProvider: updateCurrentProduct", updateResponse);
-      const { status, data: product } = updateResponse;
-      if (product && status === 200) {
+      const { status, data: detailedProduct } = updateResponse;
+      if (detailedProduct && status === 200) {
 
 
-        setProducts((prevProducts) =>{
-          return prevProducts.map((p) => (p.id === product.id ? product : p));
+        setDetailedProducts((prevDetailedProducts) =>{
+          return prevDetailedProducts.map((p) => (p.id === detailedProduct.id ? detailedProduct : p));
         });
 
         setIsUpdating(false);
@@ -132,7 +136,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       console.log("productProvider: deleteResponse", deleteResponse);
       if (deleteResponse.status === 200) {
 
-        setProducts(products.filter((product) => product.id !== productId));
+        setDetailedProducts(detailedProducts.filter((detailedProduct) => detailedProduct.id !== productId));
 
         setIsDeleting(false);
         setDeleteError("");
@@ -153,12 +157,12 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       }
       setOpenSnack(true);
     }
-  }, [products, clearErrorsAndCloseSnack]);
+  }, [detailedProducts, clearErrorsAndCloseSnack]);
 
   const productContext = useMemo(
     () => ({
       state: {
-        products,
+        detailedProducts,
         loadingData,
         isCreating,
         isUpdating,
@@ -167,6 +171,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         updateError,
         deleteError,
         openSnack,
+        categoriesWithSubFilters,
+        sizeFilters,
+        colorFilters,
       },
       actions: { createNewProduct, updateCurrentProduct, deleteCurrentProduct, clearErrorsAndCloseSnack },
     }),
@@ -175,7 +182,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       updateCurrentProduct,
       deleteCurrentProduct,
       clearErrorsAndCloseSnack,
-      products,
+      detailedProducts,
       isCreating,
       isUpdating,
       isDeleting,
@@ -184,6 +191,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       updateError,
       deleteError,
       openSnack,
+      categoriesWithSubFilters,
+      sizeFilters,
+      colorFilters,
     ]
   );
 
