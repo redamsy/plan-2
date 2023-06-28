@@ -30,6 +30,7 @@ interface Props {
     onChangePassword: (data: IChangePasswordBody) => Promise<void>;
     onClose: () => void;
 }
+//TODO: wrapp with memo
 export default function ChangePassword({ isChangingPassword, open, onChangePassword, onClose}: Props): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
