@@ -3,13 +3,20 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-
 import CircularProgressPage from "./components/CircularProgressPage";
 import { useAuthState } from "./context/authContext";
 import { ProductProvider } from "./providers/productProvider";
+import { unauthenticatedRoutes} from "./routes";
+import { CategoryProvider } from "./providers/categoryProvider";
+import { SubCategoryProvider } from "./providers/subCategoryProvider";
+import { AddItemNotificationProvider } from "./providers/AddItemNotificationProvider";
+import { ColorProvider } from "./providers/colorProvider";
+import { SizeProvider } from "./providers/SizeProvider";
 import { ImageProvider } from "./providers/imageProvider";
+import { VendorProvider } from "./providers/vendorProvider";
+import { PageProvider } from "./providers/pageProvider";
 
 const SignInPage = lazy(() => import("./pages/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const NotFoundComponent = lazy(() => import("./components/NotFoundComponent"));
 const Dashboard = lazy(() => import("./pages/Dashboard"))
-const Shop = lazy(() => import("./pages/Shop/Shop"));
 
 const App = (): JSX.Element => {
   const { isAuthenticated } = useAuthState();
@@ -41,21 +48,41 @@ const App = (): JSX.Element => {
               )
             }
           />
+          {/* You'll only need the trailing * (path='/*) when there is another <Routes> */}
+          {/* if we don't want to include path : "/" then use <Outlet/>, see : https://reactrouter.com/en/main/components/outlet */}
           <Route
             element={
-              <ProductProvider>
-                <Outlet />
-              </ProductProvider>
+              <PageProvider>
+                <ProductProvider>
+                  <CategoryProvider>
+                    <AddItemNotificationProvider>
+                      <Outlet />
+                    </AddItemNotificationProvider>
+                  </CategoryProvider>
+                </ProductProvider>
+              </PageProvider>
             }
           >
             <>
-              <Route path={`/`} element={<Shop />} />
+              {/* we can't make this as a component since any direct child of <Route> should be exactly <Route> or <Routes>   */}
+              {unauthenticatedRoutes.map(({ component: Component, path }) => (
+                <Route path={`/${path}`} key={path} element={<Component />} />
+              ))}
+              {/* <Outlet/> */}
               <Route
                 path={`/dashboard`}
                 element={
-                  <ImageProvider>
-                      <Dashboard />
-                  </ImageProvider>
+                  <SubCategoryProvider>
+                    <ColorProvider>
+                      <SizeProvider>
+                        <ImageProvider>
+                          <VendorProvider>
+                            <Dashboard />
+                          </VendorProvider>
+                        </ImageProvider>
+                      </SizeProvider>
+                    </ColorProvider>
+                  </SubCategoryProvider>
                 }
               />
             </>
