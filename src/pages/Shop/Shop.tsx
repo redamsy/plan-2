@@ -4,8 +4,11 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import styles from './Shop.module.css';
 
 import Banner from '../../components/Banner';
+import BreadCrumbs from '../../components/BreadCrumbs';
+import CardController, { Filter } from '../../components/CardController';
 import Container from '../../components/Container';
 import Layout from '../../components/Layout';
+import LayoutOption from '../../components/LayoutOption';
 import ProductCardGrid from '../../components/ProductCardGrid';
 import { useProductState } from '../../context/productsContext';
 import CircularProgressPage from '../../components/CircularProgressPage';
@@ -56,6 +59,11 @@ const Shop = () => {
   //   const sortedResult = [...filteredDetailedProducts].sort((a, b) => a.title.localeCompare(b.title));
   //   setFilteredDetailedProducts(sortedResult);
   // };
+  const applyFilter = useCallback((filterState: Filter[]) => {
+    const filtered = generateFilteredProducts(filterState, detailedProducts);
+    setFilteredDetailedProducts(filtered);
+  }, [detailedProducts]);
+
   return (
     <Layout>
       {loadingData ? (
@@ -64,7 +72,14 @@ const Shop = () => {
         <div className={styles.root}>
           <Container size={'large'} spacing={'min'}>
             <div className={styles.breadcrumbContainer}>
-
+              <BreadCrumbs
+                crumbs={categoryparam ? [
+                  { link: '/', label: 'Home' },
+                  { link: '/', label: categoryparam },
+                ] : [
+                  { link: '/', label: 'Home' },
+                ]}
+              />
             </div>
           </Container>
           <Banner
@@ -94,7 +109,13 @@ const Shop = () => {
                 </div>
               </div>
             </div>
-
+            <CardController
+              categoryparam={categoryparam}
+              totalResult={displayedProducts.length}
+              applyFilter={applyFilter}
+              closeFilter={() => setShowFilter(false)}
+              visible={showFilter}
+            />
             {/* <div className={styles.chipsContainer}>
               <Chip name={'XS'} close={onclose}/>
               <Chip name={'S'} close={onclose}/>
@@ -122,6 +143,7 @@ const Shop = () => {
         </div>
       )}
 
+      <LayoutOption />
     </Layout>
   );
 };
