@@ -66,11 +66,14 @@ const CardController = memo(({categoryparam, totalResult, visible, closeFilter, 
       >
         <div className={styles.actionContainer}>
           <Button
-            onClick={closeFilter}
+            onClick={() => {
+              closeFilter();
+              return;
+            }}
             className={styles.customButtonStyling}
-            level={'secondary'}
+            level={'primary'}
           >
-            close
+            view items
           </Button>
         </div>
       </div>
