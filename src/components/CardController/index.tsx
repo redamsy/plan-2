@@ -65,7 +65,13 @@ const CardController = memo(({categoryparam, totalResult, visible, closeFilter, 
         }`}
       >
         <div className={styles.actionContainer}>
-          llllllllllll
+          <Button
+            onClick={closeFilter}
+            className={styles.customButtonStyling}
+            level={'secondary'}
+          >
+            close
+          </Button>
         </div>
       </div>
     </div>
