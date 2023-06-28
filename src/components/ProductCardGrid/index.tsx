@@ -1,22 +1,19 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 import styles from './ProductCardGrid.module.css';
 
-import Drawer from '../Drawer';
 import ProductCard from '../ProductCard';
-import QuickView from '../QuickView';
 import Slider from '../Slider';
-import { DetailedProduct } from '../../models/Product';
+import { Product } from '../../models/Product';
 
 interface Props {
     height?: number | string;
     columns?: number;
-    data: DetailedProduct[];
+    data: Product[];
     spacing?: boolean;
     showSlider?: boolean;
 }
 
 const ProductCardGrid = memo((props: Props) => {
-  const [showQuickView, setShowQuickView] = useState<DetailedProduct | undefined>(undefined);
   const { height, columns = 3, data, spacing, showSlider = false } = props;
   const columnCount = {
     gridTemplateColumns: `repeat(${columns}, 1fr)`,
@@ -32,9 +29,9 @@ const ProductCardGrid = memo((props: Props) => {
           height={height}
           price={product.price}
           title={product.title}
+          description={product.description}
           image={product.image.url}
           originalPrice={product.originalPrice}
-          showQuickView={() => setShowQuickView(product)}
         />
       );
     });
@@ -50,17 +47,11 @@ const ProductCardGrid = memo((props: Props) => {
       >
         {data && renderCards()}
       </div>
-
+        {/* this is not used choice for the client if he wants to scroll verticlly or horizantally */}
       {showSlider === true && (
         <div className={styles.mobileSlider}>
           <Slider spacing={spacing}>{data && renderCards()}</Slider>
         </div>
-      )}
-
-      {!!showQuickView && (
-        <Drawer visible={!!showQuickView} close={() => setShowQuickView(undefined)}>
-          <QuickView detailedProduct={showQuickView}  close={() => setShowQuickView(undefined)} />
-        </Drawer>
       )}
     </div>
   );
