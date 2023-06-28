@@ -1,7 +1,6 @@
 import React, { useEffect, useState, memo } from 'react';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import Container from '../Container';
-import Checkbox from '../Checkbox';
 import styles from './CardController.module.css';
 import Button from '../Button';
 import { useProductState } from '../../context/productsContext';
@@ -113,39 +112,6 @@ const CardController = memo(({categoryparam, totalResult, visible, closeFilter, 
           visible === true ? styles.show : styles.hide
         }`}
       >
-        <Container>
-          <div className={styles.filterContainer}>
-            {filterState &&
-              filterState.map((filter, categoryIndex) => {
-                // if number of filter per category is less than 4 maintain single layout
-                const colNum = filter.items.length >= 4 ? 2 : 1;
-                return (
-                  <div key={`category-${categoryIndex}`}>
-                    <span className={styles.category}>{filter.category}</span>
-                    <div
-                      className={styles.nameContainers}
-                      style={{ gridTemplateColumns: `repeat(${colNum}, 1fr)` }}
-                    >
-                      {filter.items &&
-                        filter.items.map((item, itemIndex) => (
-                          <Checkbox
-                            key={itemIndex}
-                            action={(e) =>
-                              filterTick(e, categoryIndex, itemIndex)
-                            }
-                            label={item.name}
-                            value={item.name}
-                            id={item.name}
-                            name={item.name}
-                            isChecked={item.value}
-                          />
-                        ))}
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </Container>
         <div className={styles.actionContainer}>
           <Button
             onClick={() => {
