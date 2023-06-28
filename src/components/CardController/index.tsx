@@ -59,29 +59,9 @@ const CardController = memo(({categoryparam, totalResult, visible, closeFilter, 
 
   return (
     <div>
-      <div
-        className={`${styles.webRoot} ${
-          visible === true ? styles.show : styles.hide
-        }`}
-      >
-        <div className={styles.actionContainer}>
-          <Button
-            onClick={() => {
-              closeFilter();
-              return;
-            }}
-            className={styles.customButtonStyling}
-            level={'primary'}
-          >
-            view items
-          </Button>
-          <Button
-            onClick={closeFilter}
-            className={styles.customButtonStyling}
-            level={'secondary'}
-          >
-            close
-          </Button>
+      <div>
+        <div>
+          lllllllllllll
         </div>
       </div>
     </div>
