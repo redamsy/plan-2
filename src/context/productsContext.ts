@@ -5,10 +5,7 @@ import { IProductBody } from "../models/Product";
 // initial value for the product context
 export const initialProductContext: IProductContext = {
   state: {
-    detailedProducts: [],
-    categoriesWithSubFilters: [],
-    sizeFilters: [],
-    colorFilters: [],
+    products: [],
     loadingData: true,
     isCreating: false,
     isUpdating: false,

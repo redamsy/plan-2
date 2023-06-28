@@ -8,7 +8,6 @@
 
 .imageContainer {
     position: relative;
-    cursor: pointer;
 }
 
 .root img {
@@ -22,6 +21,12 @@
     font-size: 14px;
     line-height: 17px;
     color: var(--standard-black);
+}
+
+.productDescription {
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--standard-dark-gold);
 }
 
 .prices {
@@ -131,7 +136,7 @@
 
 @media (max-width: 600px) {
     .imageContainer img{
-        height: 300px !important;
+        height: 500px !important;
     }
 
     .productName {
@@ -148,7 +153,7 @@
 
 @media (max-width: 400px) {
     .imageContainer img{
-        height: 220px !important;
+        height: 350px !important;
     }
 
     .bagContainer {
