@@ -29,6 +29,7 @@ const ProductCardGrid = memo((props: Props) => {
           height={height}
           price={product.price}
           title={product.title}
+          description={product.description}
           image={product.image.url}
           originalPrice={product.originalPrice}
         />

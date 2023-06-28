@@ -49,7 +49,7 @@ const App = (): JSX.Element => {
             }
           >
             <>
-              <Route path={`/shop`} element={<Shop />} />
+              <Route path={`/`} element={<Shop />} />
               <Route
                 path={`/dashboard`}
                 element={

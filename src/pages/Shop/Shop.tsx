@@ -4,7 +4,6 @@ import styles from './Shop.module.css';
 import Banner from '../../components/Banner';
 import Container from '../../components/Container';
 import Layout from '../../components/Layout';
-import LayoutOption from '../../components/LayoutOption';
 import ProductCardGrid from '../../components/ProductCardGrid';
 import { useProductState } from '../../context/productsContext';
 import CircularProgressPage from '../../components/CircularProgressPage';
@@ -71,8 +70,6 @@ const Shop = () => {
           </Container>
         </div>
       )}
-
-      <LayoutOption />
     </Layout>
   );
 };

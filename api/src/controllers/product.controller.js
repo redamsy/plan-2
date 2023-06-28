@@ -4,10 +4,10 @@ import { productModel } from "../models/user.model.js";
 
 const create = async (req, res) => {
   try {
-    const { itemCode, title, description, vendorId, imageId, price, originalPrice, remaining } = req.body;
+    const { itemCode, title, description, imageId, price, originalPrice, remaining } = req.body;
 
     const product = new productModel({
-      itemCode, title, description, vendorId, imageId, price, originalPrice, remaining,
+      itemCode, title, description, imageId, price, originalPrice, remaining,
     });
 
     await product.save(); 
@@ -26,16 +26,15 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { productId } = req.params;
-    const { itemCode, title, description, vendorId, imageId, price, originalPrice, remaining } = req.body;
+    const { itemCode, title, description, imageId, price, originalPrice, remaining } = req.body;
   
-    const product = await productModel.findById(productId).select("itemCode description vendorId imageId price originalPrice remaining id title categoryId createdAt updatedAt");
+    const product = await productModel.findById(productId).select("itemCode description imageId price originalPrice remaining id title categoryId createdAt updatedAt");
     if (!product) return responseHandler.notfound(res);
 
     product.itemCode = itemCode;
     product.title = title;
     product.description = description;
     product.imageId = imageId;
-    product.vendorId = vendorId;
     product.price = price;
     product.originalPrice = originalPrice;
     product.remaining = remaining;

@@ -11,6 +11,7 @@ interface Props {
   itemCode: string;
   image: string;
   title: string;
+  description: string;
   price: number;
   originalPrice?: number;
   height?: number | string;
@@ -22,6 +23,7 @@ const ProductCard = memo((props: Props) => {
     itemCode,
     image,
     title,
+    description,
     price,
     originalPrice,
     height = 580,
@@ -37,6 +39,7 @@ const ProductCard = memo((props: Props) => {
       </div>
       <div className={styles.detailsContainer}>
         <span className={styles.productName}>{title}</span>
+        <div className={styles.productDescription}>{description}</div>
         <div className={styles.prices}>
           <span
             className={`${originalPrice !== undefined ? styles.salePrice : ''}`}

@@ -9,7 +9,7 @@ const Brand = memo(() => {
     <div
       className={styles.root}
       role={'presentation'}
-      onClick={() => navigate('/')}
+      onClick={() => navigate('/dashboard')}
     >
       {/* <h4>SYDNEY</h4> */}
       <svg
