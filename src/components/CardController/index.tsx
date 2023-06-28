@@ -4,7 +4,6 @@ import Container from '../Container';
 import Checkbox from '../Checkbox';
 import styles from './CardController.module.css';
 import Button from '../Button';
-import Drawer from '../Drawer';
 import { useProductState } from '../../context/productsContext';
 import { useParams } from 'react-router-dom';
 import { CategoriesWithSub } from '../../models/Product';
@@ -167,105 +166,6 @@ const CardController = memo(({categoryparam, totalResult, visible, closeFilter, 
             close
           </Button>
         </div>
-      </div>
-      <div className={styles.mobileRoot}>
-        <Drawer visible={visible} close={closeFilter}>
-          <div className={styles.mobileFilterContainer}>
-            <h2 className={styles.mobileFilterTitle}>Filters</h2>
-
-            {category === undefined && (
-              <div className={styles.mobileFilters}>
-                {filterState?.map((filterItem, categoryIndex) => {
-                  return (
-                    <div
-                      key={categoryIndex}
-                      className={styles.filterItemContainer}
-                      role={'presentation'}
-                      onClick={() =>
-                        setCategory({
-                          ...filterItem,
-                          categoryIndex: categoryIndex,
-                        })
-                      }
-                    >
-                      <span className={styles.filterName}>
-                        {filterItem.category}
-                      </span>
-                      <ArrowRightAltOutlinedIcon/>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
-            {category !== undefined && (
-              <div className={styles.mobileCategoryContainer}>
-                <div
-                  className={styles.mobileHeader}
-                  role={'presentation'}
-                  onClick={() => setCategory(undefined)}
-                >
-                  <ArrowRightAltOutlinedIcon/>
-                  <span className={styles.mobileCategory}>
-                    {category.category}
-                  </span>
-                </div>
-                {category.items.map((item, itemIndex) => {
-                  return (
-                    <Checkbox
-                      key={itemIndex}
-                      action={(e) =>
-                        filterTick(e, category.categoryIndex, itemIndex)
-                      }
-                      label={item.name}
-                      value={item.name}
-                      id={item.name}
-                      name={item.name}
-                      isChecked={item.value}
-                    />
-                  );
-                })}
-              </div>
-            )}
-
-            <div className={styles.mobileButtonContainer}>
-              {category === undefined && (
-                <Button
-                onClick={() => {
-                  applyFilter(filterState);
-                  closeFilter();
-                  return;
-                }}
-                fullWidth
-                level={'primary'}
-              >
-                  {`show results: ${totalResult}`}
-                </Button>
-              )}
-              {category !== undefined && (
-                <div>
-                  <Button
-                    onClick={() => {
-                      applyFilter(filterState);
-                      closeFilter();
-                      return;
-                    }}
-                    fullWidth level={'primary'}
-                  >
-                    Apply
-                  </Button>
-                  <div
-                    className={styles.clearFilterContainer}
-                    role={'presentation'}
-                    onClick={() => resetFilter()}
-                  >
-                    <span className={styles.clearFilter}>clear filters</span>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </Drawer>
       </div>
     </div>
   );
