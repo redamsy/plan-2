@@ -1,24 +1,24 @@
 import { AxiosResponse } from "axios";
 import otherAxios from "../interceptors/otherAxios";
-import { IProductBody, DetailedProduct } from "../models/Product";
+import { IProductBody, Product } from "../models/Product";
 
-export const getDetailedProducts = async (): Promise<AxiosResponse<DetailedProduct[]>> => {
-  const resp = await otherAxios.get<DetailedProduct[]>("/api/products");
+export const getProducts = async (): Promise<AxiosResponse<Product[]>> => {
+  const resp = await otherAxios.get<Product[]>("/api/products");
 
   return resp;
 };
 
 export const createProduct = async (
   product: IProductBody
-): Promise<AxiosResponse<DetailedProduct>> => {
-  const resp = await otherAxios.post<DetailedProduct>("/api/products", product);
+): Promise<AxiosResponse<Product>> => {
+  const resp = await otherAxios.post<Product>("/api/products", product);
   return resp;
 };
 
 export const updateProduct = async (
   product: IProductBody
-): Promise<AxiosResponse<DetailedProduct>> => {
-  const resp = await otherAxios.put<DetailedProduct>(`/api/products/${product.id}`, product);
+): Promise<AxiosResponse<Product>> => {
+  const resp = await otherAxios.put<Product>(`/api/products/${product.id}`, product);
   return resp;
 };
 
