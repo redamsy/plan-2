@@ -56,11 +56,6 @@ const initializeFilterState = (
 };
 
 const CardController = memo(({categoryparam, totalResult, visible, closeFilter, applyFilter}: Props) => {
-  const { categoriesWithSubFilters, sizeFilters, colorFilters } = useProductState();
-  const [filterState, setFilterState] = useState<Filter[]>(
-    initializeFilterState(categoriesWithSubFilters, colorFilters, sizeFilters, categoryparam)
-    );
-
 
   return (
     <div>
@@ -72,7 +67,6 @@ const CardController = memo(({categoryparam, totalResult, visible, closeFilter, 
         <div className={styles.actionContainer}>
           <Button
             onClick={() => {
-              applyFilter(filterState);
               closeFilter();
               return;
             }}
