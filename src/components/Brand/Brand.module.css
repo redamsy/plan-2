@@ -1,7 +1,6 @@
 .root {
     display: flex;
     justify-content: center;
-    cursor: pointer;
 }
 
 @media (max-width: 800px) {

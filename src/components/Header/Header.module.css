@@ -20,7 +20,7 @@
 
 .header {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     align-items: center;
     padding: 48px 0px 48px 0px;
     margin: 0 auto;
